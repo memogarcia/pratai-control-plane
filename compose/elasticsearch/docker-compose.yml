@@ -1,0 +1,49 @@
+version: "2"
+
+services:
+    es-client:
+        image: elasticsearch:1.7.5
+        volumes:
+            - /var/data/elasticsearch:/elasticsearch/data
+        privileged: true
+        environment:
+            - NODE_MASTER=false
+            - NODE_DATA=false
+            - CLUSTER_NAME=adel
+            - ES_HEAP_SIZE=3G
+        expose:
+            - "9200"
+            - "9300"
+        #networks:
+        #    - es-net
+    es-data:
+        image: elasticsearch:1.7.5
+        volumes:
+            - /var/data/elasticsearch:/elasticsearch/data
+        privileged: true
+        environment:
+            - NODE_MASTER=false
+            - HTTP_ENABLE=false
+            - CLUSTER_NAME=adel
+            - ES_HEAP_SIZE=3G
+        expose:
+            - "9300"
+        #networks:
+        #    - es-net
+
+    es-master:
+        image: elasticsearch:1.7.5
+        volumes:
+            - /var/data/elasticsearch:/elasticsearch/data
+        privileged: true
+        environment:
+            - NODE_DATA=false
+            - HTTP_ENABLE=false
+            - CLUSTER_NAME=adel
+            - ES_HEAP_SIZE=3G
+        expose:
+            - "9300"
+        #networks:
+        #    - es-net
+#networks:                     
+#es-net:
